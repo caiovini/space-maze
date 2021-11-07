@@ -13,4 +13,4 @@ Sources for this game can be found [here!](https://opengameart.org/content/rocke
 
 ## Demo
 
-![alt text](https://github.com/caiovini/space-maze/blob/master/Demo.gif)
+![alt text](https://github.com/caiovini/space-maze/blob/main/Demo.gif)
