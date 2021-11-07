@@ -1,0 +1,106 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Game.gd" type="Script" id=1]
+[ext_resource path="res://assets/controller/ControllerRadius.png" type="Texture" id=2]
+[ext_resource path="res://assets/controller/ControllerPosition.png" type="Texture" id=3]
+[ext_resource path="res://JoystickButton.gd" type="Script" id=4]
+[ext_resource path="res://assets/rocket/cohete_off.png" type="Texture" id=5]
+[ext_resource path="res://Rocket.gd" type="Script" id=6]
+[ext_resource path="res://assets/particles/0061.png" type="Texture" id=7]
+[ext_resource path="res://assets/buttons/tile000.png" type="Texture" id=8]
+[ext_resource path="res://assets/buttons/tile001.png" type="Texture" id=9]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 35.7032, 78.2584 )
+
+[node name="Game" type="Node2D"]
+
+[node name="Container" type="Container" parent="."]
+margin_right = 2240.0
+margin_bottom = 1080.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="JoystickController" type="Sprite" parent="Container"]
+self_modulate = Color( 1, 1, 1, 0.352941 )
+position = Vector2( 148.973, 908.429 )
+texture = ExtResource( 2 )
+
+[node name="JoystickButton" type="TouchScreenButton" parent="Container/JoystickController"]
+position = Vector2( -24.7974, -37.7977 )
+normal = ExtResource( 3 )
+pressed = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Rocket" type="KinematicBody2D" parent="Container"]
+script = ExtResource( 6 )
+
+[node name="cohete_off" type="Sprite" parent="Container/Rocket"]
+position = Vector2( 1111.46, 531.623 )
+scale = Vector2( 0.97573, 1 )
+texture = ExtResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Container/Rocket"]
+position = Vector2( 1111.8, 524.451 )
+shape = SubResource( 1 )
+
+[node name="RocketParticles" type="CPUParticles2D" parent="Container/Rocket"]
+position = Vector2( 1113.26, 667.42 )
+amount = 15
+texture = ExtResource( 7 )
+angular_velocity = 36.3
+angular_velocity_random = 0.74
+angle = 180.0
+
+[node name="BoostButton" type="TouchScreenButton" parent="Container"]
+modulate = Color( 1, 1, 1, 0.635294 )
+position = Vector2( 1983.57, 801.642 )
+scale = Vector2( 0.767415, 0.796983 )
+normal = ExtResource( 9 )
+pressed = ExtResource( 8 )
+
+[node name="Area2D" type="Area2D" parent="Container"]
+
+[node name="LabelScore" type="Label" parent="Container"]
+margin_right = 100.0
+margin_bottom = 100.0
+rect_scale = Vector2( 2, 2 )
+custom_colors/font_color = Color( 1, 1, 0, 1 )
+text = "SCORE"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelGameOver" type="Label" parent="Container"]
+visible = false
+anchor_left = 0.414
+anchor_top = 0.272
+anchor_right = 0.414
+anchor_bottom = 0.289
+margin_right = 40.0
+margin_bottom = 14.0
+rect_scale = Vector2( 5, 5 )
+custom_colors/font_color = Color( 1, 1, 0, 1 )
+text = "GAME OVER"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="ButtonRestart" type="Button" parent="Container"]
+visible = false
+margin_left = 927.36
+margin_top = 220.0
+margin_right = 1127.36
+margin_bottom = 270.0
+rect_scale = Vector2( 2, 2 )
+text = "RESTART"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Container/BoostButton" to="Container" method="_on_BoostButton_pressed"]
+[connection signal="released" from="Container/BoostButton" to="Container" method="_on_BoostButton_released"]
+[connection signal="pressed" from="Container/ButtonRestart" to="Container" method="_on_ButtonRestart_pressed"]
